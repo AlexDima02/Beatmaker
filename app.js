@@ -91,12 +91,7 @@ class drumPad{
 
             beatMaker.savedPads.push(padObj);
             
-
-
-        }else {
-
-
-            beatMaker.savedPads.pop(padObj);
+            
 
 
         }
@@ -104,7 +99,7 @@ class drumPad{
         // Save to local Storage 
         // When we click on the save button our clicked pads that are saved in the array need to go into a local storage
 
-        beatMaker.saveToLocal(padObj);
+        
         
 
         // !!!!!
@@ -148,47 +143,23 @@ class drumPad{
     
    // Limit the array to 8 values and if it exceeds the first value would be erased
    
-    const limit = beatMaker.limitExceeds(save);
     
-    save.push(padObj);
+    const limit = beatMaker.limitExceeds();
     
+    beatMaker.savedPads.push(padObj);
+    
+    console.log(beatMaker.savedPads);
    
     if(limit){
 
-        save.shift();
-    
+        beatMaker.savedPads.shift();
+        
     }
     
     
-    localStorage.setItem('pads', JSON.stringify(save));  
+    localStorage.setItem('pads', JSON.stringify(beatMaker.savedPads));  
     
-   
-                // // Restrict the limit of the array
-                // // We want to declare the limit 
-                // // and what is happening with the array that exceeds the limit
-
-                
-                
-              
                
-
-
-                
-                
-
-            
-
-
-            
-
-        
-        
-        
-        
-       
-
-
-
     }
 
     
@@ -231,15 +202,15 @@ class drumPad{
 
 
 
-    limitExceeds(save){
+    limitExceeds(){
 
             let limitLength = 7;
             let exceedsLimit = false;
     
-            if(save.length > limitLength) {
+            if(beatMaker.savedPads.length > limitLength) {
                 
                 exceedsLimit = true;
-                
+                console.log(2);
             }
             
             return exceedsLimit;
@@ -325,33 +296,6 @@ class drumPad{
 
 
     }
-
-// Make every drumpadSet remain in place after the page restarts
-
-    keepLocal(){
-
-        let store;
-
-        if(localStorage.getItem('pads') === null){
-
-
-            store = [];
-
-
-        }else {
-
-            store= JSON.parse(localStorage.getItem('pads'));
-
-
-
-        }
-
-        
-
-
-
-    }
-
 
 
     erase(){
