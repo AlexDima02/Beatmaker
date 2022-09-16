@@ -326,6 +326,32 @@ class drumPad{
 
     }
 
+// Make every drumpadSet remain in place after the page restarts
+
+    keepLocal(){
+
+        let store;
+
+        if(localStorage.getItem('pads') === null){
+
+
+            store = [];
+
+
+        }else {
+
+            store= JSON.parse(localStorage.getItem('pads'));
+
+
+
+        }
+
+        
+
+
+
+    }
+
 
 
     erase(){
@@ -703,8 +729,10 @@ beatMaker.submitBtn.addEventListener('click', () => {
     beatMaker.backMenu.classList.remove('active');
     const popup = beatMaker.backMenu.children[0];
     popup.classList.remove('active');
+    const reseted = JSON.parse(localStorage.getItem('pads'));
+    reseted = localStorage.clear();
 
-})
+});
 
 
 
