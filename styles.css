@@ -18,7 +18,7 @@ body{
 
 .project-menu-background{
 
-    opacity: 0;
+   display: none;
    
 
 }
@@ -53,7 +53,7 @@ body{
 .popup-background.active, .project-menu-background.active{
 
     min-width: 100vw;
-    min-height: 100vh;
+    height: 100vh;
     background-color: rgba(0, 0, 0, 0.473);
     color: white;
     position: absolute;
@@ -70,7 +70,7 @@ body{
 .popup-background{
 
     
-    opacity: 0;
+    display: none;
     transition: all 0.4s ease-in;
 
 }
@@ -100,6 +100,15 @@ body{
     padding: 0.3rem;
     color: white;
     
+}
+
+
+.custom-palette{
+
+    
+    display: block;
+
+
 }
 
 /* Container elements */

@@ -53,7 +53,7 @@ class drumPad{
         this.inputMenu = document.querySelector('.project-menu');
         this.closeProj = document.querySelector('.close-button');
         this.setsName = document.querySelector('.drumpads-input');
-
+        this.submitBtn = document.querySelector('.input-sets');
 
         this.savedPads = [];
 
@@ -105,60 +105,12 @@ class drumPad{
         // When we click on the save button our clicked pads that are saved in the array need to go into a local storage
 
         beatMaker.saveToLocal(padObj);
+        
 
         // !!!!!
        // Limit the length of each array saved in the local storage to 8
         
-       // Generate the palette for the library
-
-       const palette = document.createElement('div');
-       palette.classList.add('custom-palette');
-
-       const title = document.createElement('h4');
-
-       title.innerText = padObj.name;
        
-       const paletteBtn = document.createElement('button');
-       paletteBtn.classList.add('pick-palette-btn');
-       paletteBtn.classList.add(padObj.nr);
-       paletteBtn.innerText = 'Select';
-          
-       let result = JSON.parse(localStorage.getItem('pads'));
-
-       paletteBtn.addEventListener('click', () => {
-
-           console.log(result);
-
-            beatMaker.popupContainer.classList.remove('active');
-            const popup = beatMaker.popupContainer.children[0];
-            popup.classList.remove('active');
-
-           for(let value of result){
-
-            beatMaker.pad.forEach((pads) => {
-
-                if(pads.classList.contains(value.nr) && pads.classList.contains(value.name)){
-
-                    pads.classList.toggle('active');
-
-
-
-                }
-
-
-
-            });
-
-
-       }
-        
-       });
-       
-       // Append to the load project menu
-
-       palette.appendChild(title);
-       palette.appendChild(paletteBtn);
-       beatMaker.loadMenu.appendChild(palette);
 
 
     }
@@ -173,7 +125,9 @@ class drumPad{
     // Introduce them into an array
     // Create an object and then introduce him into the array everytime we click on save
     
+    
      let save;
+     
        
     // Check if it is something in the array
 
@@ -192,33 +146,26 @@ class drumPad{
     }
 
     
-
-    save.push(padObj);
+   // Limit the array to 8 values and if it exceeds the first value would be erased
    
+    const limit = beatMaker.limitExceeds(save);
     
+    save.push(padObj);
+    
+   
+    if(limit){
 
-    localStorage.setItem('pads', JSON.stringify(save));
-               
-
-    // Limit the array to 8 values and if it exceeds the first value would be erased
-
-        beatMaker.limitExceeds(save);
-        
-        if(beatMaker.limitExceeds){
-
-            save.shift();
+        save.shift();
+    
+    }
     
     
-        }
-
-        
-                
-            
-            
+    localStorage.setItem('pads', JSON.stringify(save));  
     
+   
                 // // Restrict the limit of the array
                 // // We want to declare the limit 
-                // // and what is happening with the value that exceeds the limit
+                // // and what is happening with the array that exceeds the limit
 
                 
                 
@@ -271,15 +218,8 @@ class drumPad{
         let save;
         let check;
         
-       
     
-
-
-
-
-       
-
-    //    Background and library menu
+        //    Background and library menu
 
        beatMaker.popupContainer.classList.add('active');
        const popup = beatMaker.popupContainer.children[0];
@@ -293,7 +233,7 @@ class drumPad{
 
     limitExceeds(save){
 
-            let limitLength = 8;
+            let limitLength = 7;
             let exceedsLimit = false;
     
             if(save.length > limitLength) {
@@ -314,12 +254,63 @@ class drumPad{
         // Takes all the element from the local storage
         // Takes an input value and store it 
 
-       beatMaker.backMenu.classList.add('active');
-       const popup = beatMaker.backMenu.children[0];
-       popup.classList.add('active');
        
+       
+       
+       const name = beatMaker.setsName.value;
+
+       const palette = document.createElement('div');
+       palette.classList.add('custom-palette');
+
+       const title = document.createElement('h4');
+
+       title.innerText = name;
+       
+       const paletteBtn = document.createElement('button');
+       paletteBtn.classList.add('pick-palette-btn');
+       paletteBtn.innerText = 'Select';
+          
+       let drumpadsSet = JSON.parse(localStorage.getItem('pads'));
+
+       paletteBtn.addEventListener('click', () => {
+
+           console.log(drumpadsSet);
+    
+        // Close the popup
+
+            beatMaker.popupContainer.classList.remove('active');
+            const popup = beatMaker.popupContainer.children[0];
+            popup.classList.remove('active');
+
+           for(let value of drumpadsSet){
+
+            beatMaker.pad.forEach((pads) => {
+
+                if(pads.classList.contains(value.nr) && pads.classList.contains(value.name)){
+
+                    pads.classList.toggle('active');
 
 
+
+                }
+
+
+
+            });
+
+
+       }
+        
+       });
+       
+       // Append to the load project menu
+
+       palette.appendChild(title);
+       palette.appendChild(paletteBtn);
+       beatMaker.loadMenu.appendChild(palette);
+
+       
+        
 
     }
 
@@ -674,10 +665,10 @@ beatMaker.saveBtn.addEventListener('click', (padObj) => {
 });
 
 
-beatMaker.loadBtn.addEventListener('click', (e) => {
+beatMaker.loadBtn.addEventListener('click', () => {
 
 
-    beatMaker.loadSounds(e);
+    beatMaker.loadSounds();
    
 
 });
@@ -690,17 +681,32 @@ beatMaker.closeLib.addEventListener('click', () => {
     const popup = beatMaker.popupContainer.children[0];
     popup.classList.remove('active');
 
-
 });
 
 // New project menu 
 
 beatMaker.newBtn.addEventListener('click', () => {
 
-   beatMaker.getLocal();
+    beatMaker.backMenu.classList.add('active');
+    const popup = beatMaker.backMenu.children[0];
+    popup.classList.add('active');
 
 
 });
+
+// Submiting the entire pad
+
+beatMaker.submitBtn.addEventListener('click', () => {
+
+    beatMaker.getLocal();
+    beatMaker.setsName.value = '';
+    beatMaker.backMenu.classList.remove('active');
+    const popup = beatMaker.backMenu.children[0];
+    popup.classList.remove('active');
+
+})
+
+
 
 // Closing save project menu
 
