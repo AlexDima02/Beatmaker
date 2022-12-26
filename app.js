@@ -56,7 +56,7 @@ class drumPad{
         this.submitBtn = document.querySelector('.input-sets');
 
         this.savedPads = [];
-
+        
     }
 
     // Function that selects the coloured pads- 
@@ -67,10 +67,10 @@ class drumPad{
 
     activePad(e){
 
-        this.classList.toggle('active');
-        this.classList.toggle('saved');
-        
-        
+      this.classList.toggle('active');
+      this.classList.toggle('saved');
+    
+    
         
         
         const padNr = e.target.classList[2];
@@ -80,7 +80,9 @@ class drumPad{
 
         const padObj = {name, state, nr: padNr};
 
+        
 
+    
         
 // Save all the pads with only the class of active
         
@@ -88,26 +90,45 @@ class drumPad{
         
         if(e.target.classList.contains('saved')){
 
+            beatMaker.savedPads.push(padObj);
+
+            
+            
+            
+
+
+        }else{
+
+// Push the objects without state property and they will no longer be readable
+// When those pads are deactivated, make them colorful only if two properties are existent
+// Avoid dupliicates
 
             beatMaker.savedPads.push(padObj);
             
-            
+            // const newArr = beatMaker.savedPads.filter((object) => {
 
+                
+            //     object !== object.state;
+                
 
+            // });
+    
+            // console.log(newArr);
         }
-
-        // Save to local Storage 
-        // When we click on the save button our clicked pads that are saved in the array need to go into a local storage
-
-        
-        
-
-        // !!!!!
-       // Limit the length of each array saved in the local storage to 8
-        
+ 
        
 
+            // const newArr = beatMaker.savedPads.indexOf((object) => {
 
+            //     clearContainer.push(padObj);
+            //     return object.state === undefined;
+                
+
+            // });
+
+            // console.log(newArr);
+
+       
     }
 
 
@@ -124,11 +145,11 @@ class drumPad{
      let save;
      
        
-    // Check if it is something in the array
+    // // // Check if it is something in the array
 
     if(localStorage.getItem('pads') === null){
 
-        save = []
+        save = [];
 
 
 
@@ -141,28 +162,15 @@ class drumPad{
     }
 
     
-   // Limit the array to 8 values and if it exceeds the first value would be erased
-   
     
-    const limit = beatMaker.limitExceeds();
     
-    beatMaker.savedPads.push(padObj);
-    
-    console.log(beatMaker.savedPads);
-   
-    if(limit){
-
-        beatMaker.savedPads.shift();
-        
-    }
     
     
     localStorage.setItem('pads', JSON.stringify(beatMaker.savedPads));  
     
                
     }
-
-    
+ 
 
 
 // Output method
@@ -202,12 +210,12 @@ class drumPad{
 
 
 
-    limitExceeds(){
+    limitExceeds(save){
 
             let limitLength = 7;
             let exceedsLimit = false;
     
-            if(beatMaker.savedPads.length > limitLength) {
+            if(save.length > limitLength) {
                 
                 exceedsLimit = true;
                 console.log(2);
@@ -257,7 +265,7 @@ class drumPad{
 
             beatMaker.pad.forEach((pads) => {
 
-                if(pads.classList.contains(value.nr) && pads.classList.contains(value.name)){
+                if(pads.classList.contains(value.nr) && pads.classList.contains(value.state)){
 
                     pads.classList.toggle('active');
 
@@ -632,6 +640,7 @@ beatMaker.saveBtn.addEventListener('click', (padObj) => {
     beatMaker.saveToLocal(padObj);
 
 
+
 });
 
 
@@ -673,7 +682,7 @@ beatMaker.submitBtn.addEventListener('click', () => {
     beatMaker.backMenu.classList.remove('active');
     const popup = beatMaker.backMenu.children[0];
     popup.classList.remove('active');
-    const reseted = JSON.parse(localStorage.getItem('pads'));
+    let reseted = JSON.parse(localStorage.getItem('pads'));
     reseted = localStorage.clear();
 
 });

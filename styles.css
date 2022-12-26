@@ -10,7 +10,7 @@ body{
 
     font-size: 1rem;
     font-family: 'Silkscreen', cursive;
-    
+    background-image: url('./images/brick-wall.png');
 
 }
 
@@ -123,7 +123,7 @@ body{
     width: 80%;
     margin: 0 auto;
     min-height: 100vh;
-    border: 1px solid red;
+    
 }
 
 
@@ -135,7 +135,7 @@ body{
     max-width: 50%;
     border: 3px solid rgb(82, 82, 82);
     padding: 1rem;
-
+    background-color: rgb(54, 79, 51);
 
 
 }
@@ -146,6 +146,7 @@ body{
 
     border: 1px solid grey;
     margin-bottom: 2rem;
+    background-color: #849182;
 
 }
 
@@ -154,7 +155,7 @@ body{
     position: relative;
     transform: rotate(-90deg);
     background:rgb(167, 167, 167);
-    width: 200px;
+    width: 150px;
     height: 80px;
     display: flex;
     flex-direction: column;
@@ -255,10 +256,24 @@ input[type='range']::-webkit-slider-thumb {
     align-items: center;
     justify-content: space-around;
     flex-grow: 1;
-    max-width: 50%;
+    min-width: 50%;
     border: 3px solid rgb(82, 82, 82);
     background: rgb(35, 51, 33);
+    padding-top: 1rem;
+    
 }
+
+.kick-drum,.snare-drum,.hihat-drum{
+
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+
+}
+
 
 .kick .kick-pad{
     
@@ -315,10 +330,6 @@ input[type='range']::-webkit-slider-thumb {
 
 
 
-
-
-
-
 .hihat .hihat-pad{
 
     border: 1px solid rgba(167, 167, 167, 0.137);
@@ -345,12 +356,140 @@ input[type='range']::-webkit-slider-thumb {
 }
 
 
+/* Customizing the select control and options*/
+
+.drum-tonalities{
+
+    font-size: 0.9rem;
+    font-family: 'Silkscreen', cursive;
+    background-color: rgb(94, 104, 91);
+    color: white;
+    
+
+}
+
+.drum-tonalities:focus{
+
+    background-color: #4b554a;
+    outline: none;
+    
+
+}
+
+
+@media only screen and (max-width: 768px){
+
+    
+    .container{
+
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        max-width: 400px;
+        width: 100%;
+
+    }
+
+    .controller{
+
+        min-width: 100%;
+        height: auto;
+        margin-top: 1rem;
+    }
 
 
 
+    .project-buttons button, .sequence-buttons button{
+
+        
+        margin: auto 3rem;
+
+    }
 
 
+    .bpm-slider{
 
+        position: absolute;
+        transform: rotate(-90deg);
+        background:rgb(167, 167, 167);
+        width: 150px;
+        height: 80px;
+        display: flex;
+        flex-direction: row;
+        margin: 2rem;
+    }
+
+    input[type='range'] {
+        -webkit-appearance: none !important;
+        background:rgb(90, 90, 90);
+        height: 0.5rem;
+        width: 100%;
+        position: relative;
+        bottom: -50%;
+        top: 50%;
+        left: 20px;
+        cursor: pointer;
+    }
+    
+    input[type='range']::-webkit-slider-thumb {
+        -webkit-appearance: none !important;
+        background:rgb(78, 78, 78);
+        height: 3rem;
+        width: 1.5rem;
+    }
+
+    .drumpads{
+
+        min-width: 100%;
+        padding: 1rem;
+        margin-top: 1rem;
+    }
+
+    .kick-drum,.snare-drum,.hihat-drum{
+
+        margin: auto 0.3rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        
+
+    }
+
+    .drum-tonalities{
+
+        font-size: 0.9rem;
+        
+        
+    
+    }
+    
+    .character-image{
+
+        display: none;
+
+    }
+
+}
+
+/*Character image */
+
+.character-image{
+
+    width: 430px;
+    height: auto;
+    position: absolute;
+    z-index: -99;
+    
+}
+
+.character-image img{
+
+    width: 100%;
+    height: 100%;
+
+
+}
 
 @keyframes playTrack{
 
